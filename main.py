@@ -47,13 +47,36 @@ def downloadMp4(url: str):
     except Exception as e:
         print(f"Unable to fetch video information. Error: {e}")
 
-choise = ''
-while choise != '3':
-    choise = input("Download mp3 (press 1), or mp4 (press 2), for exit press 3: ")
+def get_valid_choice():
+    while True:
+        try:
+            choise = input("Download mp3 (press 1), or mp4 (press 2), for exit press 3: ").strip()
+            if choise == '':
+                print("Input cannot be empty. Please enter a valid option.")
+                continue
+            choise = int(choise)
+            if choise in [1, 2, 3]:
+                return choise
+            else:
+                print("Not a valid option! Please enter 1, 2, or 3.")
+        except ValueError:
+            print("Please enter a valid number (1, 2, or 3).")
 
-    if choise == '1':
-        url = input("Enter url: ")
-        downloadMp3(url)
-    elif choise == '2':
-        url = input("Enter url: ")
-        downloadMp4(url)
+while True:
+    choise = get_valid_choice()
+
+    if choise == 1:
+        url = input("Enter url: ").strip()
+        if url:
+            downloadMp3(url)
+        else:
+            print("URL cannot be empty. Please enter a valid URL.")
+    elif choise == 2:
+        url = input("Enter url: ").strip()
+        if url:
+            downloadMp4(url)
+        else:
+            print("URL cannot be empty. Please enter a valid URL.")
+    elif choise == 3:
+        print("Exiting...")
+        break
